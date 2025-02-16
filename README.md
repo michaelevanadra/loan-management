@@ -20,7 +20,7 @@ Detailed steps can be found in the [frontend README](./frontend/README.md)
 
 ```bash
 cd frontend
-npm
+npm install
 npm run dev
 ```
 
