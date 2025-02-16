@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --primary: #000000de;
+  --primary-foreground: #ffffff;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.ring-primary {
+  --tw-ring-color: var(--primary);
+}

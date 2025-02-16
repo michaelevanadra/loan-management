@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=exampleuser
+      - PG_PASSWORD=examplepassword
+      - PG_DATABASE=exampledb
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:17.3-alpine
+    environment:
+      - POSTGRES_USER=exampleuser
+      - POSTGRES_PASSWORD=examplepassword
+      - POSTGRES_DB=exampledb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
