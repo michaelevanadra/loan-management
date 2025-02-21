@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import LoanDashboard from '../LoanDashboard';
 import { LoanSummary, LoanStatus } from '../../types';
-import { getLoansSummary } from '../../api/loanService';
+import { getLoansSummary } from '../../api/loanApis';
+import { renderWithClient } from '../commons/TestUtils';
 
 const MOCK_SUMMARY: LoanSummary[] = [
   {
@@ -21,7 +22,7 @@ const MOCK_SUMMARY: LoanSummary[] = [
   },
 ];
 
-jest.mock('../../api/loanService');
+jest.mock('../../api/loanApis');
 
 describe('LoanDashboard Component', () => {
   beforeAll(() => {
@@ -33,7 +34,7 @@ describe('LoanDashboard Component', () => {
   });
 
   it('displays summary', async () => {
-    render(<LoanDashboard />);
+    renderWithClient(<LoanDashboard />);
 
     // Total Applications
     expect(await screen.findByText('4 Applications')).toBeInTheDocument();
@@ -45,13 +46,13 @@ describe('LoanDashboard Component', () => {
     expect(await screen.findByText('REJECTED')).toBeInTheDocument();
 
     expect(
-      await screen.findByText('Total Amount: $45000.00'),
+      await screen.findByText('Total Amount: $45000.00')
     ).toBeInTheDocument();
     expect(
-      await screen.findByText('Total Amount: $200.00'),
+      await screen.findByText('Total Amount: $200.00')
     ).toBeInTheDocument();
     expect(
-      await screen.findByText('Total Amount: $201.00'),
+      await screen.findByText('Total Amount: $201.00')
     ).toBeInTheDocument();
   });
 });

@@ -34,7 +34,7 @@ const LoanForm: React.FC<LoanFormProps> = ({
   };
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -42,21 +42,21 @@ const LoanForm: React.FC<LoanFormProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6 border border-black shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">
+      <div className="w-full max-w-md rounded-lg border border-black bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-semibold">
           {initialData?.id ? 'Edit Loan Application' : 'New Loan Application'}
         </h2>
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           <div>
             <label
               htmlFor="applicantName"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-1 block text-sm font-medium text-gray-700"
             >
               Applicant Name
             </label>
             <input
               id="applicantName"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="focus:ring-primary/50 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:outline-none"
               {...register('applicantName', {
                 required: 'Applicant Name is required',
                 onChange: handleInputChange,
@@ -72,7 +72,7 @@ const LoanForm: React.FC<LoanFormProps> = ({
               })}
             />
             {errors.applicantName && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="mt-1 text-sm text-red-500">
                 {errors.applicantName.message}
               </p>
             )}
@@ -81,13 +81,13 @@ const LoanForm: React.FC<LoanFormProps> = ({
           <div>
             <label
               htmlFor="requestedAmount"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-1 block text-sm font-medium text-gray-700"
             >
               Loan Amount
             </label>
             <input
               id="requestedAmount"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="focus:ring-primary/50 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:outline-none"
               {...register('requestedAmount', {
                 required: 'Loan Amount is required',
                 onChange: handleInputChange,
@@ -108,7 +108,7 @@ const LoanForm: React.FC<LoanFormProps> = ({
               })}
             />
             {errors.requestedAmount && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="mt-1 text-sm text-red-500">
                 {errors.requestedAmount.message}
               </p>
             )}
@@ -118,13 +118,13 @@ const LoanForm: React.FC<LoanFormProps> = ({
             <div>
               <label
                 htmlFor="status"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="mb-1 block text-sm font-medium text-gray-700"
               >
                 Status
               </label>
               <select
                 id="status"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="focus:ring-primary/50 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:outline-none"
                 {...register('status', {
                   required: 'Status is required',
                   onChange: handleInputChange,
@@ -142,13 +142,13 @@ const LoanForm: React.FC<LoanFormProps> = ({
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md hover:bg-gray-50"
+              className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary/90"
+              className="bg-primary hover:bg-primary/90 rounded-md px-4 py-2 text-sm font-medium text-white"
             >
               Save
             </button>

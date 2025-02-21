@@ -10,4 +10,5 @@ jest.mock('lucide-react', () => ({
   Plus: () => React.createElement('span', { 'data-testid': 'plus-icon' }),
   Pencil: () => React.createElement('span', { 'data-testid': 'pencil-icon' }),
   Trash: () => React.createElement('span', { 'data-testid': 'trash-icon' }),
+  Loader2: () => React.createElement('span', { 'data-testid': 'loader-icon' }),
 }));

@@ -16,18 +16,18 @@ const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab['id']>('applications');
 
   return (
-    <main className="container mx-auto py-6 px-4">
-      <h1 className="text-3xl font-bold mb-6">Loan Management System</h1>
+    <main className="container mx-auto px-4 py-6">
+      <h1 className="mb-6 text-3xl font-bold">Loan Management System</h1>
 
       <div className="border-b border-gray-200">
-        <div className="flex space-x-2 max-w-[400px]">
+        <div className="flex max-w-[400px] space-x-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              className={`rounded-t-lg px-4 py-2 text-sm font-medium ${
                 activeTab === tab.id
-                  ? 'border-b-2 border-primary text-primary'
+                  ? 'border-primary text-primary border-b-2'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
