@@ -8,13 +8,17 @@ const apiClient = axios.create({
   },
 });
 
-apiClient.interceptors.request.use(
-  (config) => {
-    return { ...config, url: `/api${config.url}` };
+apiClient.interceptors.request.use((config) => {
+  return { ...config, url: `/api${config.url}` };
+});
+
+apiClient.interceptors.response.use(
+  (response) => {
+    return response.data;
   },
   (error) => {
-    return Promise.reject(error);
-  },
+    return Promise.reject(error.response?.data || error);
+  }
 );
 
 export default apiClient;

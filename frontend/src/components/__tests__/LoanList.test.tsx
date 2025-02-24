@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoanList from '../LoanList';
 import { Loan, LoanStatus } from '../../types';
@@ -7,9 +7,10 @@ import {
   deleteLoan,
   getLoans,
   updateLoan,
-} from '../../api/loanService';
+} from '../../api/loanApis';
+import { renderWithClient } from '../commons/TestUtils';
 
-jest.mock('../../api/loanService');
+jest.mock('../../api/loanApis');
 
 const mockLoans: Loan[] = [
   {
@@ -43,13 +44,17 @@ describe('LoanList Component', () => {
   });
 
   it('renders loan list with fetched data', async () => {
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
+
+    expect(screen.getByTestId('loader-icon')).toBeInTheDocument();
 
     // Check header
-    expect(screen.getByText('Loan Applications')).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /New Application/i }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Loan Applications')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /New Application/i })
+      ).toBeInTheDocument();
+    });
 
     // Wait for loans to be loaded
     await waitFor(() => {
@@ -66,9 +71,15 @@ describe('LoanList Component', () => {
 
   it('opens form modal when New Application button is clicked', async () => {
     const user = userEvent.setup();
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
 
-    await user.click(screen.getByRole('button', { name: /New Application/i }));
+    expect(screen.getByTestId('loader-icon')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      await user.click(
+        screen.getByRole('button', { name: /New Application/i })
+      );
+    });
 
     expect(screen.getByText('New Loan Application')).toBeInTheDocument();
     expect(screen.getByLabelText(/Applicant Name/i)).toBeInTheDocument();
@@ -87,10 +98,16 @@ describe('LoanList Component', () => {
     };
     (createLoan as jest.Mock).mockResolvedValue(newLoan);
 
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
+
+    expect(screen.getByTestId('loader-icon')).toBeInTheDocument();
 
     // Open form
-    await user.click(screen.getByRole('button', { name: /New Application/i }));
+    await waitFor(async () => {
+      await user.click(
+        screen.getByRole('button', { name: /New Application/i })
+      );
+    });
 
     // Fill form
     await user.type(screen.getByLabelText(/Applicant Name/i), 'New User');
@@ -104,7 +121,7 @@ describe('LoanList Component', () => {
       expect.objectContaining({
         applicantName: 'New User',
         requestedAmount: '30000',
-      }),
+      })
     );
 
     // Verify new loan appears in list
@@ -119,7 +136,7 @@ describe('LoanList Component', () => {
     const updatedLoan = { ...mockLoans[0], applicantName: 'Updated Name' };
     (updateLoan as jest.Mock).mockResolvedValue(updatedLoan);
 
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
 
     // Wait for loans to load and click edit
     await waitFor(() => {
@@ -146,7 +163,7 @@ describe('LoanList Component', () => {
       '1',
       expect.objectContaining({
         applicantName: 'Updated Name',
-      }),
+      })
     );
 
     // Verify updated loan appears in list
@@ -160,7 +177,7 @@ describe('LoanList Component', () => {
     window.confirm = jest.fn(() => true);
     (deleteLoan as jest.Mock).mockResolvedValue(undefined);
 
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
 
     // Wait for loans to load and click delete
     await waitFor(() => {
@@ -178,7 +195,7 @@ describe('LoanList Component', () => {
     const user = userEvent.setup();
     window.confirm = jest.fn(() => false);
 
-    render(<LoanList />);
+    renderWithClient(<LoanList />);
 
     // Wait for loans to load and click delete
     await waitFor(() => {

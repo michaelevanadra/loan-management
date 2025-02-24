@@ -16,7 +16,7 @@ describe('LoanForm Component', () => {
     render(<LoanForm onSubmit={() => {}} onCancel={() => {}} />);
 
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'New Loan Application',
+      'New Loan Application'
     );
     expect(screen.getByLabelText(/Applicant Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Loan Amount/i)).toBeInTheDocument();
@@ -31,11 +31,11 @@ describe('LoanForm Component', () => {
         initialData={LOAN_DATA}
         onSubmit={() => {}}
         onCancel={() => {}}
-      />,
+      />
     );
 
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'Edit Loan Application',
+      'Edit Loan Application'
     );
     expect(screen.getByLabelText(/Applicant Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Loan Amount/i)).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('LoanForm Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /Save/i }));
 
     const errorMessage = await screen.findByText(
-      'Loan Amount must be a number',
+      'Loan Amount must be a number'
     );
     expect(errorMessage).toBeInTheDocument();
   });
@@ -89,7 +89,7 @@ describe('LoanForm Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /Save/i }));
 
     const errorMessage = await screen.findByText(
-      'Loan Amount must be greater than 0',
+      'Loan Amount must be greater than 0'
     );
     expect(errorMessage).toBeInTheDocument();
   });
@@ -103,7 +103,7 @@ describe('LoanForm Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /Save/i }));
 
     const errorMessage = await screen.findByText(
-      'Loan Amount must be less than 1,000,000,000,000',
+      'Loan Amount must be less than 1,000,000,000,000'
     );
     expect(errorMessage).toBeInTheDocument();
   });
